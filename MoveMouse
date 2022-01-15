@@ -1,0 +1,40 @@
+import tkinter
+import winsound
+import random
+import pyautogui
+
+running = True
+
+Freq = 2500
+Dur = 150
+
+top = tkinter.Tk()
+top.title('StayAwake')
+top.geometry('300x150')
+
+
+def start(force=True):
+    global running
+    if force:
+        running = True
+    if running:
+        winsound.Beep(Freq, Dur)
+        top.after(5000, start, False)
+
+        x = random.randint(0, 500)
+        y = random.randint(0, 500)
+        pyautogui.moveTo(x, y)
+
+
+def stop():
+    global running
+    running = False
+
+
+startButton = tkinter.Button(top, height=2, width=20, text="Start", command=start)
+stopButton = tkinter.Button(top, height=2, width=20, text="Stop", command=stop)
+
+startButton.pack()
+stopButton.pack()
+
+top.mainloop()
